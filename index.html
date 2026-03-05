@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aura Banquet and Lounge — Naperville's premier venue for private banquets, nightlife, VIP experiences, and live entertainment. Book your event today.">
+  <meta property="og:title" content="Aura Banquet and Lounge | Naperville, IL">
+  <meta property="og:description" content="Naperville's premier venue for private banquets, nightlife, VIP experiences, and live entertainment.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
   <title>Aura Banquet and Lounge | Naperville, IL</title>
   <style>
     *, *::before, *::after {
@@ -23,6 +28,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
     }
 
     body {
@@ -561,6 +567,7 @@
     .form-group textarea:focus,
     .form-group select:focus {
       border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.25);
     }
 
     .form-group textarea {
@@ -618,6 +625,79 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       letter-spacing: 1px;
+    }
+
+    /* ── Skip Link ── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-decoration: none;
+      z-index: 10000;
+      transition: top 0.2s;
+    }
+
+    .skip-link:focus {
+      top: 0.5rem;
+    }
+
+    /* ── Focus Visible ── */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* ── Nav Scroll State ── */
+    nav.scrolled {
+      background: rgba(10, 10, 15, 0.98);
+      border-bottom-color: rgba(201, 168, 76, 0.3);
+    }
+
+    /* ── Active Nav Link ── */
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    /* ── Hamburger Animation ── */
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── Inline-style replacements ── */
+    .contact-item .formerly {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .btn-full-width {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ── Reduced Motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
 
     /* ── Responsive ── */
@@ -684,8 +764,10 @@
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <!-- Navigation -->
-  <nav>
+  <nav aria-label="Main navigation">
     <div class="nav-inner">
       <div class="logo">Aura</div>
       <ul class="nav-links" id="navLinks">
@@ -696,13 +778,14 @@
         <li><a href="#events">Events</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
   <!-- Hero -->
+  <main id="main-content">
   <section class="hero" id="home">
     <div class="hero-content">
       <p class="hero-tagline">A New Era of Elegance</p>
@@ -970,9 +1053,7 @@
         <div class="contact-item">
           <h3>Location</h3>
           <p>Naperville, IL 60563</p>
-          <p style="font-size:0.8rem; color: var(--text-muted); margin-top:0.25rem;">
-            Formerly the Matrix Club
-          </p>
+          <p class="formerly">Formerly the Matrix Club</p>
         </div>
         <div class="contact-item">
           <h3>Hours</h3>
@@ -988,9 +1069,9 @@
         <div class="contact-item">
           <h3>Follow Us</h3>
           <p>
-            <a href="#">Instagram</a> &nbsp;&middot;&nbsp;
-            <a href="#">Facebook</a> &nbsp;&middot;&nbsp;
-            <a href="#">TikTok</a>
+            <a href="#" aria-label="Instagram">Instagram</a> &nbsp;&middot;&nbsp;
+            <a href="#" aria-label="Facebook">Facebook</a> &nbsp;&middot;&nbsp;
+            <a href="#" aria-label="TikTok">TikTok</a>
           </p>
         </div>
       </div>
@@ -1019,10 +1100,12 @@
           <label for="message">Message</label>
           <textarea id="message" name="message" placeholder="Tell us about your event or inquiry..."></textarea>
         </div>
-        <button type="submit" class="btn btn-filled" style="width:100%; text-align:center;">Send Inquiry</button>
+        <button type="submit" class="btn btn-filled btn-full-width">Send Inquiry</button>
       </form>
     </div>
   </section>
+
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -1041,22 +1124,70 @@
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+    function toggleNav() {
+      const isOpen = navLinks.classList.toggle('active');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    }
+
+    function closeNav() {
+      navLinks.classList.remove('active');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+
+    hamburger.addEventListener('click', toggleNav);
 
     // Close mobile nav on link click
     navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-      });
+      link.addEventListener('click', closeNav);
     });
+
+    // Close mobile nav on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        closeNav();
+        hamburger.focus();
+      }
+    });
+
+    // Close mobile nav on click outside
+    document.addEventListener('click', (e) => {
+      if (navLinks.classList.contains('active') &&
+          !navLinks.contains(e.target) &&
+          !hamburger.contains(e.target)) {
+        closeNav();
+      }
+    });
+
+    // Nav scroll effect — more opaque on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // Active nav link highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY + 120;
+      let currentId = '';
+      sections.forEach(section => {
+        if (scrollY >= section.offsetTop) {
+          currentId = section.getAttribute('id');
+        }
+      });
+      navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+      });
+    }, { passive: true });
 
     // Form submission handler
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = 'SENT — WE\'LL BE IN TOUCH!';
+      btn.textContent = 'SENT \u2014 WE\u2019LL BE IN TOUCH!';
       btn.style.background = '#2a7a4f';
       btn.style.borderColor = '#2a7a4f';
       btn.disabled = true;
