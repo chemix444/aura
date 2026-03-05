@@ -82,8 +82,9 @@
       stroke: var(--gold-light);
       stroke-width: 1;
       opacity: 0;
-      transform-origin: center;
+      transform-origin: 14px 14px;
       transition: opacity 0.35s ease, stroke 0.3s ease;
+      animation: diamond-spin 3s linear infinite;
     }
 
     .cursor-main.hover .cursor-cross line {
@@ -94,7 +95,6 @@
     .cursor-main.hover .cursor-diamond {
       opacity: 1;
       stroke: var(--gold);
-      animation: diamond-spin 3s linear infinite;
     }
 
     .cursor-glow.hover {
@@ -102,8 +102,8 @@
     }
 
     @keyframes diamond-spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      from { transform: rotate(45deg); }
+      to   { transform: rotate(405deg); }
     }
 
     a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
@@ -181,7 +181,7 @@
       display: none;
       flex-direction: column;
       gap: 5px;
-      cursor: pointer;
+      cursor: none;
       background: none;
       border: none;
     }
@@ -279,7 +279,7 @@
       font-size: 0.8rem;
       transition: all 0.3s;
       background: transparent;
-      cursor: pointer;
+      cursor: none;
     }
 
     .btn:hover {
@@ -451,7 +451,7 @@
       background: var(--dark-accent);
       position: relative;
       overflow: hidden;
-      cursor: pointer;
+      cursor: none;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -858,7 +858,7 @@
         <line x1="14" y1="4" x2="14" y2="24"/>
         <line x1="4" y1="14" x2="24" y2="14"/>
       </g>
-      <rect class="cursor-diamond" x="7" y="7" width="14" height="14" rx="1" transform="rotate(45 14 14)"/>
+      <rect class="cursor-diamond" x="7" y="7" width="14" height="14" rx="1"/>
     </svg>
   </div>
 
