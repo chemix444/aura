@@ -9,6 +9,9 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <title>Aura Banquet and Lounge | Naperville, IL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -31,8 +34,92 @@
       scroll-padding-top: 5rem;
     }
 
+    /* ── Elegant Heading Font ── */
+    h1, h2, h3, h4, h5, h6,
+    .logo, .hero-tagline, .hero-sub {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+    }
+
+    /* ── Custom Cursor ── */
+    .cursor-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: 220px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+      transition: opacity 0.4s ease;
+    }
+
+    .cursor-main {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+
+    .cursor-main svg {
+      width: 28px;
+      height: 28px;
+      overflow: visible;
+    }
+
+    .cursor-main .cursor-cross line {
+      stroke: var(--gold);
+      stroke-width: 1;
+      transition: stroke 0.3s ease, opacity 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .cursor-main .cursor-diamond {
+      fill: none;
+      stroke: var(--gold-light);
+      stroke-width: 1;
+      opacity: 0;
+      transform-origin: center;
+      transition: opacity 0.35s ease, stroke 0.3s ease;
+    }
+
+    .cursor-main.hover .cursor-cross line {
+      stroke: var(--gold-light);
+      opacity: 0.3;
+    }
+
+    .cursor-main.hover .cursor-diamond {
+      opacity: 1;
+      stroke: var(--gold);
+      animation: diamond-spin 3s linear infinite;
+    }
+
+    .cursor-glow.hover {
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.14) 0%, transparent 70%);
+    }
+
+    @keyframes diamond-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
+      cursor: none;
+    }
+
+    @media (pointer: coarse) {
+      .cursor-main, .cursor-glow { display: none; }
+      body, a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
+        cursor: auto;
+      }
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Raleway', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      cursor: none;
       background: var(--dark);
       color: var(--text);
       line-height: 1.6;
@@ -764,6 +851,17 @@
 </head>
 <body>
 
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="cursor-main" aria-hidden="true">
+    <svg viewBox="0 0 28 28">
+      <g class="cursor-cross">
+        <line x1="14" y1="4" x2="14" y2="24"/>
+        <line x1="4" y1="14" x2="24" y2="14"/>
+      </g>
+      <rect class="cursor-diamond" x="7" y="7" width="14" height="14" rx="1" transform="rotate(45 14 14)"/>
+    </svg>
+  </div>
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- Navigation -->
@@ -1198,6 +1296,51 @@
         btn.disabled = false;
         e.target.reset();
       }, 3000);
+    }
+    // Custom cursor
+    const cursorMain = document.querySelector('.cursor-main');
+    const cursorGlow = document.querySelector('.cursor-glow');
+
+    if (cursorMain && cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+      let mouseX = 0, mouseY = 0;
+      let glowX = 0, glowY = 0;
+
+      document.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorMain.style.left = mouseX + 'px';
+        cursorMain.style.top = mouseY + 'px';
+      });
+
+      function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        cursorGlow.style.left = glowX + 'px';
+        cursorGlow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+      }
+      animateGlow();
+
+      const hoverTargets = document.querySelectorAll('a, button, .btn, .gallery-item, .hamburger, input, textarea, select');
+      hoverTargets.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursorMain.classList.add('hover');
+          cursorGlow.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorMain.classList.remove('hover');
+          cursorGlow.classList.remove('hover');
+        });
+      });
+
+      document.addEventListener('mouseenter', () => {
+        cursorMain.style.opacity = '1';
+        cursorGlow.style.opacity = '1';
+      });
+      document.addEventListener('mouseleave', () => {
+        cursorMain.style.opacity = '0';
+        cursorGlow.style.opacity = '0';
+      });
     }
   </script>
 
