@@ -41,44 +41,69 @@
     }
 
     /* ── Custom Cursor ── */
-    .cursor-dot {
+    .cursor-glow {
       position: fixed;
       top: 0;
       left: 0;
-      width: 8px;
-      height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
+      width: 220px;
+      height: 220px;
       pointer-events: none;
-      z-index: 10000;
+      z-index: 9999;
       transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, opacity 0.3s ease;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+      transition: opacity 0.4s ease;
     }
 
-    .cursor-ring {
+    .cursor-main {
       position: fixed;
       top: 0;
       left: 0;
-      width: 36px;
-      height: 36px;
-      border: 1.5px solid var(--gold-light);
-      border-radius: 50%;
       pointer-events: none;
       z-index: 10000;
       transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
-      opacity: 0.6;
+      transition: opacity 0.3s ease;
     }
 
-    .cursor-ring.hover {
-      width: 52px;
-      height: 52px;
-      border-color: var(--gold);
+    .cursor-main svg {
+      width: 28px;
+      height: 28px;
+      overflow: visible;
+    }
+
+    .cursor-main .cursor-cross line {
+      stroke: var(--gold);
+      stroke-width: 1;
+      transition: stroke 0.3s ease, opacity 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .cursor-main .cursor-diamond {
+      fill: none;
+      stroke: var(--gold-light);
+      stroke-width: 1;
+      opacity: 0;
+      transform-origin: center;
+      transition: opacity 0.35s ease, stroke 0.3s ease;
+    }
+
+    .cursor-main.hover .cursor-cross line {
+      stroke: var(--gold-light);
+      opacity: 0.3;
+    }
+
+    .cursor-main.hover .cursor-diamond {
       opacity: 1;
+      stroke: var(--gold);
+      animation: diamond-spin 3s linear infinite;
     }
 
-    .cursor-dot.hover {
-      transform: translate(-50%, -50%) scale(1.5);
+    .cursor-glow.hover {
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.14) 0%, transparent 70%);
+    }
+
+    @keyframes diamond-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
     a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
@@ -86,7 +111,7 @@
     }
 
     @media (pointer: coarse) {
-      .cursor-dot, .cursor-ring { display: none; }
+      .cursor-main, .cursor-glow { display: none; }
       body, a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
         cursor: auto;
       }
@@ -826,8 +851,16 @@
 </head>
 <body>
 
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="cursor-main" aria-hidden="true">
+    <svg viewBox="0 0 28 28">
+      <g class="cursor-cross">
+        <line x1="14" y1="4" x2="14" y2="24"/>
+        <line x1="4" y1="14" x2="24" y2="14"/>
+      </g>
+      <rect class="cursor-diamond" x="7" y="7" width="14" height="14" rx="1" transform="rotate(45 14 14)"/>
+    </svg>
+  </div>
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -1265,48 +1298,48 @@
       }, 3000);
     }
     // Custom cursor
-    const dot = document.querySelector('.cursor-dot');
-    const ring = document.querySelector('.cursor-ring');
+    const cursorMain = document.querySelector('.cursor-main');
+    const cursorGlow = document.querySelector('.cursor-glow');
 
-    if (dot && ring && window.matchMedia('(pointer: fine)').matches) {
+    if (cursorMain && cursorGlow && window.matchMedia('(pointer: fine)').matches) {
       let mouseX = 0, mouseY = 0;
-      let ringX = 0, ringY = 0;
+      let glowX = 0, glowY = 0;
 
       document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
+        cursorMain.style.left = mouseX + 'px';
+        cursorMain.style.top = mouseY + 'px';
       });
 
-      function animateRing() {
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
+      function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        cursorGlow.style.left = glowX + 'px';
+        cursorGlow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
       }
-      animateRing();
+      animateGlow();
 
       const hoverTargets = document.querySelectorAll('a, button, .btn, .gallery-item, .hamburger, input, textarea, select');
       hoverTargets.forEach(el => {
         el.addEventListener('mouseenter', () => {
-          dot.classList.add('hover');
-          ring.classList.add('hover');
+          cursorMain.classList.add('hover');
+          cursorGlow.classList.add('hover');
         });
         el.addEventListener('mouseleave', () => {
-          dot.classList.remove('hover');
-          ring.classList.remove('hover');
+          cursorMain.classList.remove('hover');
+          cursorGlow.classList.remove('hover');
         });
       });
 
       document.addEventListener('mouseenter', () => {
-        dot.style.opacity = '1';
-        ring.style.opacity = '0.6';
+        cursorMain.style.opacity = '1';
+        cursorGlow.style.opacity = '1';
       });
       document.addEventListener('mouseleave', () => {
-        dot.style.opacity = '0';
-        ring.style.opacity = '0';
+        cursorMain.style.opacity = '0';
+        cursorGlow.style.opacity = '0';
       });
     }
   </script>
