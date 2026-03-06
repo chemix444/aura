@@ -449,6 +449,7 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: dense;
       gap: 0.5rem;
     }
 
@@ -492,9 +493,6 @@
       grid-row: span 2;
     }
 
-    .gallery-item.wide {
-      grid-column: span 2;
-    }
 
     /* ── Menu Preview ── */
     .menu-grid {
@@ -925,9 +923,6 @@
         grid-row: span 1;
       }
 
-      .gallery-item.wide {
-        grid-column: span 1;
-      }
 
       .menu-grid {
         grid-template-columns: 1fr;
@@ -1105,13 +1100,13 @@
         <span class="gallery-label">Bar Area</span>
       </div>
       <div class="gallery-item scale-in" style="--stagger: 3">
+        <span class="gallery-label">Outdoor Patio</span>
+      </div>
+      <div class="gallery-item scale-in" style="--stagger: 4">
         <span class="gallery-label">Banquet Hall</span>
       </div>
-      <div class="gallery-item tall scale-in" style="--stagger: 4">
+      <div class="gallery-item tall scale-in" style="--stagger: 5">
         <span class="gallery-label">Dance Floor</span>
-      </div>
-      <div class="gallery-item wide scale-in" style="--stagger: 5">
-        <span class="gallery-label">Outdoor Patio</span>
       </div>
     </div>
   </section>
