@@ -781,6 +781,93 @@
       text-align: center;
     }
 
+    /* ── Scroll Animations ── */
+    .fade-up,
+    .fade-in,
+    .fade-left,
+    .fade-right,
+    .scale-in {
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .fade-up {
+      transform: translateY(40px);
+    }
+
+    .fade-left {
+      transform: translateX(-40px);
+    }
+
+    .fade-right {
+      transform: translateX(40px);
+    }
+
+    .scale-in {
+      transform: scale(0.92);
+    }
+
+    .fade-up.animated,
+    .fade-in.animated,
+    .fade-left.animated,
+    .fade-right.animated,
+    .scale-in.animated {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Stagger children */
+    .stagger-children > .fade-up,
+    .stagger-children > .fade-in,
+    .stagger-children > .scale-in {
+      transition-delay: calc(var(--stagger, 0) * 0.1s);
+    }
+
+    /* Hero entrance animation */
+    .hero-animate {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: hero-entrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-animate:nth-child(1) { animation-delay: 0.1s; }
+    .hero-animate:nth-child(2) { animation-delay: 0.25s; }
+    .hero-animate:nth-child(3) { animation-delay: 0.4s; }
+    .hero-animate:nth-child(4) { animation-delay: 0.55s; }
+    .hero-animate:nth-child(5) { animation-delay: 0.65s; }
+    .hero-animate:nth-child(6) { animation-delay: 0.8s; }
+
+    @keyframes hero-entrance {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Divider line expand */
+    .divider-animate::before,
+    .divider-animate::after {
+      width: 0;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    }
+
+    .divider-animate.animated::before,
+    .divider-animate.animated::after {
+      width: 60px;
+    }
+
+    /* Stat number count-up glow */
+    .stat.animated .stat-number {
+      animation: stat-glow 0.6s ease-out;
+    }
+
+    @keyframes stat-glow {
+      0% { text-shadow: 0 0 20px rgba(201, 168, 76, 0.6); }
+      100% { text-shadow: none; }
+    }
+
     /* ── Reduced Motion ── */
     @media (prefers-reduced-motion: reduce) {
       html {
@@ -892,14 +979,14 @@
   <main id="main-content">
   <section class="hero" id="home">
     <div class="hero-content">
-      <p class="hero-tagline">A New Era of Elegance</p>
-      <h1>
+      <p class="hero-tagline hero-animate">A New Era of Elegance</p>
+      <h1 class="hero-animate">
         <strong>Aura</strong>
       </h1>
-      <p class="hero-subtitle">Banquet &amp; Lounge</p>
-      <p class="hero-sub">Where Every Moment Glows</p>
-      <p class="hero-location">Naperville, Illinois</p>
-      <div class="hero-buttons">
+      <p class="hero-subtitle hero-animate">Banquet &amp; Lounge</p>
+      <p class="hero-sub hero-animate">Where Every Moment Glows</p>
+      <p class="hero-location hero-animate">Naperville, Illinois</p>
+      <div class="hero-buttons hero-animate">
         <a href="#contact" class="btn btn-filled">Book Your Event</a>
         <a href="#services" class="btn">Explore</a>
       </div>
@@ -909,12 +996,12 @@
   <!-- About -->
   <section id="about">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>Our Story</h2>
-      <p>Redefining nightlife and event hosting in the heart of Naperville</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">Our Story</h2>
+      <p class="fade-up">Redefining nightlife and event hosting in the heart of Naperville</p>
     </div>
     <div class="about-grid">
-      <div class="about-text">
+      <div class="about-text fade-left">
         <p>
           Rising from the legacy of the iconic Matrix Club, <strong>Aura Banquet and Lounge</strong> brings a fresh,
           elevated experience to Naperville's entertainment scene. We've reimagined the space to deliver a
@@ -930,20 +1017,20 @@
           We believe Naperville deserves a world-class venue &mdash; and that's exactly what we've built.
         </p>
       </div>
-      <div class="about-stats">
-        <div class="stat">
+      <div class="about-stats stagger-children">
+        <div class="stat fade-up" style="--stagger: 0">
           <span class="stat-number">350+</span>
           <span class="stat-label">Guest Capacity</span>
         </div>
-        <div class="stat">
+        <div class="stat fade-up" style="--stagger: 1">
           <span class="stat-number">3</span>
           <span class="stat-label">Event Spaces</span>
         </div>
-        <div class="stat">
+        <div class="stat fade-up" style="--stagger: 2">
           <span class="stat-number">2</span>
           <span class="stat-label">Full Bars</span>
         </div>
-        <div class="stat">
+        <div class="stat fade-up" style="--stagger: 3">
           <span class="stat-number">7</span>
           <span class="stat-label">Days a Week</span>
         </div>
@@ -954,37 +1041,37 @@
   <!-- Services -->
   <section id="services">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>What We Offer</h2>
-      <p>From intimate gatherings to grand celebrations, we have the space and the vibe</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">What We Offer</h2>
+      <p class="fade-up">From intimate gatherings to grand celebrations, we have the space and the vibe</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card">
+    <div class="services-grid stagger-children">
+      <div class="service-card fade-up" style="--stagger: 0">
         <div class="service-icon">&#9830;</div>
         <h3>Private Banquets</h3>
         <p>Elegant event spaces for weddings, corporate events, birthdays, and milestone celebrations with full-service catering and dedicated event coordinators.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card fade-up" style="--stagger: 1">
         <div class="service-icon">&#9833;</div>
         <h3>Lounge &amp; Nightlife</h3>
         <p>An upscale lounge experience with curated cocktails, live DJs, and an atmosphere that transitions seamlessly from happy hour to late night.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card fade-up" style="--stagger: 2">
         <div class="service-icon">&#9827;</div>
         <h3>VIP Experience</h3>
         <p>Exclusive bottle service, private booths, and dedicated staff for those who want the premium treatment every time they walk through our doors.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card fade-up" style="--stagger: 3">
         <div class="service-icon">&#9733;</div>
         <h3>Live Entertainment</h3>
         <p>Regular performances from local and touring artists, themed nights, and special events that keep the energy alive all week long.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card fade-up" style="--stagger: 4">
         <div class="service-icon">&#10070;</div>
         <h3>Catering &amp; Dining</h3>
         <p>Chef-crafted menus featuring contemporary American fare with global influences, customizable for any event size or dietary need.</p>
       </div>
-      <div class="service-card">
+      <div class="service-card fade-up" style="--stagger: 5">
         <div class="service-icon">&#9883;</div>
         <h3>Corporate Events</h3>
         <p>Professional event hosting with AV equipment, flexible seating arrangements, and packages tailored for meetings, launches, and team celebrations.</p>
@@ -995,27 +1082,27 @@
   <!-- Gallery -->
   <section id="gallery">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>The Space</h2>
-      <p>A glimpse into the Aura experience</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">The Space</h2>
+      <p class="fade-up">A glimpse into the Aura experience</p>
     </div>
-    <div class="gallery-grid">
-      <div class="gallery-item tall">
+    <div class="gallery-grid stagger-children">
+      <div class="gallery-item tall scale-in" style="--stagger: 0">
         <span class="gallery-label">Main Lounge</span>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item scale-in" style="--stagger: 1">
         <span class="gallery-label">VIP Section</span>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item scale-in" style="--stagger: 2">
         <span class="gallery-label">Bar Area</span>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item scale-in" style="--stagger: 3">
         <span class="gallery-label">Banquet Hall</span>
       </div>
-      <div class="gallery-item tall">
+      <div class="gallery-item tall scale-in" style="--stagger: 4">
         <span class="gallery-label">Dance Floor</span>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item scale-in" style="--stagger: 5">
         <span class="gallery-label">Outdoor Patio</span>
       </div>
     </div>
@@ -1024,12 +1111,12 @@
   <!-- Menu Preview -->
   <section id="menu">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>Taste of Aura</h2>
-      <p>Signature selections from our cocktail and kitchen menus</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">Taste of Aura</h2>
+      <p class="fade-up">Signature selections from our cocktail and kitchen menus</p>
     </div>
     <div class="menu-grid">
-      <div class="menu-category">
+      <div class="menu-category fade-left">
         <h3>Signature Cocktails</h3>
         <div class="menu-item">
           <div>
@@ -1060,7 +1147,7 @@
           <span class="menu-item-price">$17</span>
         </div>
       </div>
-      <div class="menu-category">
+      <div class="menu-category fade-right">
         <h3>Small Plates</h3>
         <div class="menu-item">
           <div>
@@ -1097,12 +1184,12 @@
   <!-- Events -->
   <section id="events">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>Upcoming Events</h2>
-      <p>There's always something happening at Aura</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">Upcoming Events</h2>
+      <p class="fade-up">There's always something happening at Aura</p>
     </div>
-    <div class="events-list">
-      <div class="event-card">
+    <div class="events-list stagger-children">
+      <div class="event-card fade-up" style="--stagger: 0">
         <div class="event-date">
           <div class="event-day">14</div>
           <div class="event-month">Mar</div>
@@ -1112,7 +1199,7 @@
           <p>Join us as we open our doors for the first time. Live DJ, complimentary champagne toast, and a night you won't forget. Doors open at 8 PM.</p>
         </div>
       </div>
-      <div class="event-card">
+      <div class="event-card fade-up" style="--stagger: 1">
         <div class="event-date">
           <div class="event-day">21</div>
           <div class="event-month">Mar</div>
@@ -1122,7 +1209,7 @@
           <p>Salsa, bachata, and reggaeton all night long. Featuring DJ Fuego with drink specials on margaritas and mojitos. Every Saturday.</p>
         </div>
       </div>
-      <div class="event-card">
+      <div class="event-card fade-up" style="--stagger: 2">
         <div class="event-date">
           <div class="event-day">28</div>
           <div class="event-month">Mar</div>
@@ -1132,7 +1219,7 @@
           <p>Smooth vibes, classic and modern R&amp;B, craft cocktails, and VIP bottle specials. The perfect way to start your weekend.</p>
         </div>
       </div>
-      <div class="event-card">
+      <div class="event-card fade-up" style="--stagger: 3">
         <div class="event-date">
           <div class="event-day">05</div>
           <div class="event-month">Apr</div>
@@ -1148,12 +1235,12 @@
   <!-- Contact -->
   <section id="contact">
     <div class="section-header">
-      <div class="divider">&diams;</div>
-      <h2>Get in Touch</h2>
-      <p>Book your next event or reserve a table</p>
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">Get in Touch</h2>
+      <p class="fade-up">Book your next event or reserve a table</p>
     </div>
     <div class="contact-grid">
-      <div class="contact-info-block">
+      <div class="contact-info-block fade-left">
         <div class="contact-item">
           <h3>Location</h3>
           <p>Naperville, IL 60563</p>
@@ -1179,7 +1266,7 @@
           </p>
         </div>
       </div>
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form fade-right" onsubmit="handleSubmit(event)">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Name</label>
@@ -1213,7 +1300,7 @@
 
   <!-- Footer -->
   <footer>
-    <div class="footer-logo">Aura Banquet &amp; Lounge</div>
+    <div class="footer-logo fade-up">Aura Banquet &amp; Lounge</div>
     <div class="footer-social">
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>
@@ -1303,6 +1390,28 @@
         e.target.reset();
       }, 3000);
     }
+    // Scroll-triggered animations using Intersection Observer
+    const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .fade-left, .fade-right, .scale-in, .divider-animate');
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      animatedElements.forEach(el => observer.observe(el));
+    } else {
+      // If reduced motion is preferred, show everything immediately
+      animatedElements.forEach(el => el.classList.add('animated'));
+    }
+
     // Custom cursor
     const cursorMain = document.querySelector('.cursor-main');
     const cursorGlow = document.querySelector('.cursor-glow');
