@@ -237,20 +237,25 @@
 
     .hero h1 {
       font-size: clamp(2.5rem, 7vw, 5.5rem);
-      font-weight: 300;
+      font-weight: 700;
       letter-spacing: 8px;
       text-transform: uppercase;
       line-height: 1.1;
       margin-bottom: 0.5rem;
-    }
-
-    .hero h1 strong {
-      font-weight: 700;
-      display: block;
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
     }
 
     .hero-sub {
@@ -889,8 +894,8 @@
       <p class="hero-tagline">A New Era of Elegance</p>
       <h1>
         <strong>Aura</strong>
-        Banquet &amp; Lounge
       </h1>
+      <p class="hero-subtitle">Banquet &amp; Lounge</p>
       <p class="hero-sub">Where Every Moment Glows</p>
       <p class="hero-location">Naperville, Illinois</p>
       <div class="hero-buttons">
