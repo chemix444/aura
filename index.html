@@ -29,6 +29,29 @@
       --text-muted: #a9a7b5;
     }
 
+    /* ── Scrollbar ── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) var(--dark);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    }
+
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 5rem;
