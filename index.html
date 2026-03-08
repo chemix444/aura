@@ -63,18 +63,24 @@
       font-family: 'Cormorant Garamond', 'Georgia', serif;
     }
 
-    /* ── Custom Cursor ── */
+    /* ── Custom Star Cursor ── */
     .cursor-glow {
       position: fixed;
       top: 0;
       left: 0;
-      width: 220px;
-      height: 220px;
+      width: 180px;
+      height: 180px;
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(232, 213, 163, 0.1) 0%, transparent 70%);
-      transition: opacity 0.4s ease;
+      background: radial-gradient(circle, rgba(232, 213, 163, 0.08) 0%, transparent 70%);
+      transition: opacity 0.4s ease, width 0.4s ease, height 0.4s ease, background 0.4s ease;
+    }
+
+    .cursor-glow.hover {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(232, 213, 163, 0.22) 0%, transparent 70%);
     }
 
     .cursor-main {
@@ -88,54 +94,60 @@
     }
 
     .cursor-main svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       overflow: visible;
+      filter: drop-shadow(0 0 4px rgba(232, 213, 163, 0.4));
+      animation: star-spin 6s linear infinite;
+      transition: filter 0.3s ease;
     }
 
-    .cursor-main .cursor-cross line {
-      stroke: var(--gold);
-      stroke-width: 1;
-      transition: stroke 0.3s ease, opacity 0.3s ease;
-      opacity: 0.7;
+    .cursor-main.hover svg {
+      filter: drop-shadow(0 0 10px rgba(232, 213, 163, 0.8)) drop-shadow(0 0 20px rgba(201, 168, 76, 0.4));
+      animation: star-spin-fast 1.2s linear infinite;
     }
 
-    .cursor-main .cursor-diamond {
-      fill: none;
-      stroke: var(--gold-light);
-      stroke-width: 1;
-      opacity: 0;
-      transform-origin: 14px 14px;
-      transition: opacity 0.35s ease, stroke 0.3s ease;
-      animation: diamond-spin 3s linear infinite;
+    .cursor-star {
+      fill: var(--gold);
+      opacity: 0.85;
+      transition: opacity 0.3s ease, fill 0.3s ease;
     }
 
-    .cursor-main.hover .cursor-cross line {
-      stroke: var(--gold-light);
-      opacity: 0;
-    }
-
-    .cursor-main.hover .cursor-diamond {
+    .cursor-main.hover .cursor-star {
+      fill: var(--gold-light);
       opacity: 1;
-      stroke: var(--gold);
     }
 
-    .cursor-glow.hover {
-      background: radial-gradient(circle, rgba(232, 213, 163, 0.18) 0%, transparent 70%);
+    @keyframes star-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
-    @keyframes diamond-spin {
-      from { transform: rotate(45deg); }
-      to   { transform: rotate(405deg); }
+    @keyframes star-spin-fast {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
-    a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
+    /* Cursor particles */
+    .cursor-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+    }
+
+    a, button, .btn, .gallery-item, .hamburger {
       cursor: none;
     }
 
     @media (pointer: coarse) {
-      .cursor-main, .cursor-glow { display: none; }
-      body, a, button, .btn, .gallery-item, .hamburger, input, textarea, select {
+      .cursor-main, .cursor-glow { display: none !important; }
+      .cursor-particle { display: none !important; }
+      body, a, button, .btn, .gallery-item, .hamburger {
         cursor: auto;
       }
     }
@@ -147,6 +159,9 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeSpeed;
     }
 
     /* ── Navigation ── */
@@ -325,11 +340,49 @@
       background: var(--gold-light);
     }
 
-    .hero-buttons {
+    /* ── Scroll Indicator ── */
+    .scroll-indicator {
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      animation: hero-entrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .scroll-arrow {
+      width: 20px;
+      height: 32px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .scroll-arrow::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      width: 3px;
+      height: 6px;
+      margin-left: -1.5px;
+      background: var(--gold);
+      border-radius: 2px;
+      animation: scroll-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-bounce {
+      0%, 100% { opacity: 1; transform: translateY(0); }
+      50% { opacity: 0.3; transform: translateY(10px); }
     }
 
     /* ── Divider ── */
@@ -353,6 +406,7 @@
     /* ── Sections ── */
     section {
       padding: 6rem 2rem;
+      contain: layout style;
     }
 
     .section-header {
@@ -620,17 +674,15 @@
 
     /* ── Contact ── */
     .contact-grid {
-      max-width: 1000px;
+      max-width: 600px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      text-align: center;
     }
 
     .contact-info-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
     }
 
     .contact-item h3 {
@@ -649,53 +701,6 @@
 
     .contact-item a:hover {
       color: var(--gold);
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: var(--dark-card);
-      border: 1px solid rgba(232, 213, 163, 0.18);
-      color: var(--text);
-      font-size: 0.9rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 2px rgba(232, 213, 163, 0.28);
-    }
-
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
     }
 
     /* ── Footer ── */
@@ -800,11 +805,6 @@
       margin-top: 0.25rem;
     }
 
-    .btn-full-width {
-      width: 100%;
-      text-align: center;
-    }
-
     /* ── Scroll Animations ── */
     .fade-up,
     .fade-in,
@@ -906,6 +906,19 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
+      section {
+        padding: 4rem 1.25rem;
+      }
+
+      .section-header {
+        margin-bottom: 2.5rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.8rem;
+        letter-spacing: 3px;
+      }
+
       .nav-links {
         display: none;
         position: absolute;
@@ -927,14 +940,41 @@
         display: flex;
       }
 
-      .about-grid,
-      .contact-grid {
+      .hero {
+        min-height: calc(100vh - env(safe-area-inset-bottom, 0px));
+        min-height: 100svh;
+      }
+
+      .hero-content {
+        padding: 1.5rem;
+      }
+
+      .hero-sub {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+      }
+
+      .hero-location {
+        font-size: 0.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .about-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
+      }
+
+      .about-stats {
+        gap: 1rem;
       }
 
       .services-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .service-card {
+        padding: 2rem 1.5rem;
       }
 
       .gallery-grid {
@@ -945,24 +985,48 @@
         grid-row: span 1;
       }
 
-
       .menu-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
       .event-card {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+        padding: 1.5rem;
       }
 
-      .form-row {
+      .contact-info-block {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .scroll-indicator {
+        margin-top: 2rem;
+      }
+
+      footer {
+        padding: 2rem 1.25rem;
+      }
+
+      .footer-social {
+        flex-wrap: wrap;
+      }
+    }
+
+    /* Small phones */
+    @media (max-width: 400px) {
+      .gallery-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-buttons {
-        flex-direction: column;
-        align-items: center;
+      .about-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-inner {
+        padding: 0.75rem 1rem;
       }
     }
   </style>
@@ -971,14 +1035,11 @@
 
   <div class="cursor-glow" aria-hidden="true"></div>
   <div class="cursor-main" aria-hidden="true">
-    <svg viewBox="0 0 28 28">
-      <g class="cursor-cross">
-        <line x1="14" y1="4" x2="14" y2="24"/>
-        <line x1="4" y1="14" x2="24" y2="14"/>
-      </g>
-      <rect class="cursor-diamond" x="7" y="7" width="14" height="14" rx="1"/>
+    <svg viewBox="0 0 24 24">
+      <polygon class="cursor-star" points="12,0 15.1,7.6 23.4,8.8 17.3,14.5 18.7,22.8 12,19 5.3,22.8 6.7,14.5 0.6,8.8 8.9,7.6"/>
     </svg>
   </div>
+  <div id="cursorParticles" aria-hidden="true"></div>
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -1011,9 +1072,9 @@
       <p class="hero-subtitle hero-animate">Banquet &amp; Lounge</p>
       <p class="hero-sub hero-animate">Where Every Moment Glows</p>
       <p class="hero-location hero-animate">Naperville, Illinois</p>
-      <div class="hero-buttons hero-animate">
-        <a href="#contact" class="btn btn-filled">Book Your Event</a>
-        <a href="#services" class="btn">Explore</a>
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
       </div>
     </div>
   </section>
@@ -1262,10 +1323,10 @@
     <div class="section-header">
       <div class="divider divider-animate fade-in">&diams;</div>
       <h2 class="fade-up">Get in Touch</h2>
-      <p class="fade-up">Book your next event or reserve a table</p>
+      <p class="fade-up">We'd love to hear from you</p>
     </div>
     <div class="contact-grid">
-      <div class="contact-info-block fade-left">
+      <div class="contact-info-block fade-up">
         <div class="contact-item">
           <h3>Location</h3>
           <p>808 IL-59, Naperville, IL 60540</p>
@@ -1287,33 +1348,6 @@
           </p>
         </div>
       </div>
-      <form class="contact-form fade-right" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="type">Inquiry Type</label>
-          <select id="type" name="type">
-            <option value="reservation">Table Reservation</option>
-            <option value="banquet">Banquet Booking</option>
-            <option value="vip">VIP / Bottle Service</option>
-            <option value="corporate">Corporate Event</option>
-            <option value="general">General Inquiry</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell us about your event or inquiry..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-filled btn-full-width">Send Inquiry</button>
-      </form>
     </div>
   </section>
 
@@ -1395,22 +1429,6 @@
       });
     }, { passive: true });
 
-    // Form submission handler
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button[type="submit"]');
-      btn.textContent = 'SENT \u2014 WE\u2019LL BE IN TOUCH!';
-      btn.style.background = '#2a7a4f';
-      btn.style.borderColor = '#2a7a4f';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'SEND INQUIRY';
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.disabled = false;
-        e.target.reset();
-      }, 3000);
-    }
     // Scroll-triggered animations using Intersection Observer
     const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .fade-left, .fade-right, .scale-in, .divider-animate');
 
@@ -1433,13 +1451,16 @@
       animatedElements.forEach(el => el.classList.add('animated'));
     }
 
-    // Custom cursor
+    // Custom star cursor with particles
     const cursorMain = document.querySelector('.cursor-main');
     const cursorGlow = document.querySelector('.cursor-glow');
+    const particleContainer = document.getElementById('cursorParticles');
 
     if (cursorMain && cursorGlow && window.matchMedia('(pointer: fine)').matches) {
       let mouseX = 0, mouseY = 0;
       let glowX = 0, glowY = 0;
+      let isHovering = false;
+      let particleTimer = 0;
 
       document.addEventListener('mousemove', e => {
         mouseX = e.clientX;
@@ -1448,22 +1469,64 @@
         cursorMain.style.top = mouseY + 'px';
       });
 
+      // Particle system
+      function spawnParticle() {
+        const p = document.createElement('div');
+        p.className = 'cursor-particle';
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 15 + Math.random() * 25;
+        const size = 2 + Math.random() * 3;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = mouseX + 'px';
+        p.style.top = mouseY + 'px';
+        particleContainer.appendChild(p);
+
+        const dx = Math.cos(angle) * speed;
+        const dy = Math.sin(angle) * speed;
+        let opacity = 0.7 + Math.random() * 0.3;
+        let x = 0, y = 0;
+
+        function animate() {
+          opacity -= 0.02;
+          x += dx * 0.06;
+          y += dy * 0.06;
+          if (opacity <= 0) {
+            p.remove();
+            return;
+          }
+          p.style.opacity = opacity;
+          p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+          requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+      }
+
       function animateGlow() {
         glowX += (mouseX - glowX) * 0.08;
         glowY += (mouseY - glowY) * 0.08;
         cursorGlow.style.left = glowX + 'px';
         cursorGlow.style.top = glowY + 'px';
+
+        particleTimer++;
+        const interval = isHovering ? 3 : 8;
+        if (particleTimer % interval === 0) {
+          spawnParticle();
+        }
+
         requestAnimationFrame(animateGlow);
       }
       animateGlow();
 
-      const hoverTargets = document.querySelectorAll('a, button, .btn, .gallery-item, .hamburger, input, textarea, select');
+      const hoverTargets = document.querySelectorAll('a, button, .btn, .gallery-item, .hamburger');
       hoverTargets.forEach(el => {
         el.addEventListener('mouseenter', () => {
+          isHovering = true;
           cursorMain.classList.add('hover');
           cursorGlow.classList.add('hover');
         });
         el.addEventListener('mouseleave', () => {
+          isHovering = false;
           cursorMain.classList.remove('hover');
           cursorGlow.classList.remove('hover');
         });
