@@ -8,7 +8,52 @@
   <meta property="og:description" content="A nightlife and events spot in Naperville where good music, great drinks, and unforgettable nights come together.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aura Club and Conventions | Naperville, IL">
+  <meta name="twitter:description" content="A nightlife and events spot in Naperville where good music, great drinks, and unforgettable nights come together.">
+  <meta name="theme-color" content="#1c1d2b">
   <title>Aura Club and Conventions | Naperville, IL</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NightClub",
+    "name": "Aura Club and Conventions",
+    "description": "A nightlife and events spot in Naperville where good music, great drinks, and unforgettable nights come together.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "808 IL-59",
+      "addressLocality": "Naperville",
+      "addressRegion": "IL",
+      "postalCode": "60540",
+      "addressCountry": "US"
+    },
+    "telephone": "+1-630-555-0808",
+    "email": "info@auranaperville.com",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "16:00",
+        "closes": "00:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Friday", "Saturday"],
+        "opens": "16:00",
+        "closes": "02:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "12:00",
+        "closes": "22:00"
+      }
+    ],
+    "priceRange": "$$",
+    "servesCuisine": "American",
+    "hasMap": "https://www.google.com/maps/place/808+IL-59,+Naperville,+IL+60540"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -570,6 +615,45 @@
     }
 
 
+    /* ── Booking CTA ── */
+    .cta-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 60%),
+        var(--dark);
+      border-top: 1px solid rgba(232, 213, 163, 0.08);
+      border-bottom: 1px solid rgba(232, 213, 163, 0.08);
+    }
+
+    .cta-content {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
     /* ── Menu Preview ── */
     .menu-grid {
       max-width: 900px;
@@ -672,6 +756,78 @@
       color: var(--text-muted);
     }
 
+    /* ── FAQ ── */
+    #faq {
+      background: var(--dark-card);
+    }
+
+    .faq-list {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border: 1px solid rgba(232, 213, 163, 0.12);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.3s;
+    }
+
+    .faq-item[open] {
+      border-color: var(--gold);
+    }
+
+    .faq-item summary {
+      padding: 1.25rem 1.5rem;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--gold);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item summary:hover {
+      color: var(--gold);
+    }
+
+    .faq-item p {
+      padding: 0 1.5rem 1.25rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .faq-item p a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .faq-item p a:hover {
+      color: var(--gold-light);
+    }
+
     /* ── Contact ── */
     .contact-grid {
       max-width: 600px;
@@ -750,6 +906,49 @@
       color: var(--gold-light);
     }
 
+    .contact-modal-title {
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-modal-text {
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-modal-details {
+      margin-bottom: 1rem;
+    }
+
+    .contact-modal-details p {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-modal-details a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .contact-modal-details a:hover {
+      color: var(--gold-light);
+    }
+
+    .contact-modal-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      font-style: italic;
+    }
+
     /* ── Footer ── */
     footer {
       background: var(--dark-card);
@@ -794,6 +993,38 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       letter-spacing: 1px;
+    }
+
+    /* ── Back to Top ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark-card);
+      border: 1px solid rgba(232, 213, 163, 0.25);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.8rem;
+      z-index: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, background 0.3s, border-color 0.3s;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
     }
 
     /* ── Skip Link ── */
@@ -1100,6 +1331,7 @@
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#menu">Menu</a></li>
         <li><a href="#events">Events</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
@@ -1220,23 +1452,35 @@
       <p class="fade-up">Here's a peek at what you're walking into</p>
     </div>
     <div class="gallery-grid stagger-children">
-      <div class="gallery-item tall scale-in" style="--stagger: 0">
+      <div class="gallery-item tall scale-in" style="--stagger: 0; background: linear-gradient(135deg, #2d2e42 0%, #1c1d2b 50%, rgba(201,168,76,0.1) 100%);">
         <span class="gallery-label">Main Club</span>
       </div>
-      <div class="gallery-item scale-in" style="--stagger: 1">
+      <div class="gallery-item scale-in" style="--stagger: 1; background: linear-gradient(225deg, #2d2e42 0%, rgba(201,168,76,0.08) 100%);">
         <span class="gallery-label">VIP Section</span>
       </div>
-      <div class="gallery-item scale-in" style="--stagger: 2">
+      <div class="gallery-item scale-in" style="--stagger: 2; background: linear-gradient(180deg, rgba(201,168,76,0.06) 0%, #242536 100%);">
         <span class="gallery-label">Bar Area</span>
       </div>
-      <div class="gallery-item scale-in" style="--stagger: 3">
+      <div class="gallery-item scale-in" style="--stagger: 3; background: linear-gradient(315deg, #2d2e42 0%, rgba(201,168,76,0.1) 100%);">
         <span class="gallery-label">Outdoor Patio</span>
       </div>
-      <div class="gallery-item scale-in" style="--stagger: 4">
+      <div class="gallery-item scale-in" style="--stagger: 4; background: linear-gradient(45deg, rgba(201,168,76,0.06) 0%, #1c1d2b 100%);">
         <span class="gallery-label">Convention Hall</span>
       </div>
-      <div class="gallery-item tall scale-in" style="--stagger: 5">
+      <div class="gallery-item tall scale-in" style="--stagger: 5; background: linear-gradient(200deg, #2d2e42 0%, #1c1d2b 40%, rgba(201,168,76,0.12) 100%);">
         <span class="gallery-label">Dance Floor</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking CTA -->
+  <section class="cta-section" id="book">
+    <div class="cta-content fade-up">
+      <h2>Your Event, Our Space</h2>
+      <p>From intimate gatherings to full-scale conventions, we handle the details so you can enjoy the night. Three distinct spaces, in-house catering, and a team that actually cares about getting it right.</p>
+      <div class="cta-buttons">
+        <a href="mailto:events@auranaperville.com" class="btn btn-filled">Book a Private Event</a>
+        <a href="#services" class="btn">Explore Our Services</a>
       </div>
     </div>
   </section>
@@ -1324,18 +1568,18 @@
     <div class="events-list stagger-children">
       <div class="event-card fade-up" style="--stagger: 0">
         <div class="event-date">
-          <div class="event-day">14</div>
-          <div class="event-month">Mar</div>
+          <div class="event-day">04</div>
+          <div class="event-month">Apr</div>
         </div>
         <div class="event-info">
-          <h3>Grand Opening Weekend</h3>
-          <p>This is it &mdash; we're finally opening our doors. Come through for a live DJ, a champagne toast on us, and a night to kick things off right. Doors at 8 PM.</p>
+          <h3>R&amp;B Fridays</h3>
+          <p>Classic and new R&amp;B, solid cocktails, and bottle specials in VIP. Honestly the best way to start your weekend. Doors at 9 PM.</p>
         </div>
       </div>
       <div class="event-card fade-up" style="--stagger: 1">
         <div class="event-date">
-          <div class="event-day">21</div>
-          <div class="event-month">Mar</div>
+          <div class="event-day">11</div>
+          <div class="event-month">Apr</div>
         </div>
         <div class="event-info">
           <h3>Latin Nights</h3>
@@ -1344,17 +1588,7 @@
       </div>
       <div class="event-card fade-up" style="--stagger: 2">
         <div class="event-date">
-          <div class="event-day">28</div>
-          <div class="event-month">Mar</div>
-        </div>
-        <div class="event-info">
-          <h3>R&amp;B Fridays</h3>
-          <p>Classic and new R&amp;B, solid cocktails, and bottle specials in VIP. Honestly the best way to start your weekend.</p>
-        </div>
-      </div>
-      <div class="event-card fade-up" style="--stagger: 3">
-        <div class="event-date">
-          <div class="event-day">05</div>
+          <div class="event-day">18</div>
           <div class="event-month">Apr</div>
         </div>
         <div class="event-info">
@@ -1362,6 +1596,51 @@
           <p>If you work in hospitality or service, you're in free before 11. Half-price drinks all night, plus a networking hour from 9&ndash;10 PM to connect with your people.</p>
         </div>
       </div>
+      <div class="event-card fade-up" style="--stagger: 3">
+        <div class="event-date">
+          <div class="event-day">25</div>
+          <div class="event-month">Apr</div>
+        </div>
+        <div class="event-info">
+          <h3>Spring Glow Party</h3>
+          <p>UV lights, glow accessories at the door, and our bartenders mixing neon cocktails all night. Dress to glow &mdash; best outfits get free bottle service.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-header">
+      <div class="divider divider-animate fade-in">&diams;</div>
+      <h2 class="fade-up">Good to Know</h2>
+      <p class="fade-up">Answers to the stuff people usually ask us</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item fade-up">
+        <summary>Is there an age requirement?</summary>
+        <p>Yes &mdash; you must be 21 or older to enter. Valid government-issued photo ID is required at the door, no exceptions.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Is there a dress code?</summary>
+        <p>We keep it smart casual. Collared shirts, clean sneakers, and stylish fits are all welcome. No athletic wear, flip-flops, or overly casual clothing. When in doubt, dress it up a little.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Where do I park?</summary>
+        <p>We have a free parking lot right on-site with over 200 spaces. For bigger events, overflow parking is available across the street with signage to guide you in.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Do I need a reservation?</summary>
+        <p>Walk-ins are always welcome for regular nights. For VIP bottle service or large groups (8+), we recommend reserving ahead so we can set things up right. You can reach us at <a href="mailto:info@auranaperville.com">info@auranaperville.com</a>.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>How do I book a private event?</summary>
+        <p>Email us at <a href="mailto:events@auranaperville.com">events@auranaperville.com</a> with your date, estimated guest count, and the type of event. Our events team will get back to you within 24 hours to walk through options and pricing.</p>
+      </details>
+      <details class="faq-item fade-up">
+        <summary>Is the venue accessible?</summary>
+        <p>Absolutely. Aura is fully ADA-compliant with step-free access throughout, accessible restrooms, and dedicated seating areas. If you have any specific needs, let us know ahead of time and we'll make sure you're taken care of.</p>
+      </details>
     </div>
   </section>
 
@@ -1377,11 +1656,13 @@
       <div class="contact-info-block fade-up">
         <div class="contact-item">
           <h3>Location</h3>
-          <p>808 IL-59, Naperville, IL 60540</p>
+          <a href="https://www.google.com/maps/place/808+IL-59,+Naperville,+IL+60540" target="_blank" rel="noopener noreferrer">808 IL-59, Naperville, IL 60540</a>
         </div>
         <div class="contact-item">
           <h3>Hours</h3>
-          <p>TBD</p>
+          <p>Mon&ndash;Thu: 4 PM &ndash; 12 AM</p>
+          <p>Fri&ndash;Sat: 4 PM &ndash; 2 AM</p>
+          <p>Sun: 12 PM &ndash; 10 PM</p>
         </div>
         <div class="contact-item">
           <h3>Follow Us</h3>
@@ -1399,11 +1680,27 @@
   <div class="contact-modal-overlay" id="contactModal">
     <div class="contact-modal">
       <button class="contact-modal-close" id="contactModalClose">&times;</button>
-      <p>TBD</p>
+      <h3 class="contact-modal-title">Get in Touch</h3>
+      <p class="contact-modal-text">For general inquiries, reservations, or private event bookings:</p>
+      <div class="contact-modal-details">
+        <p><strong>Email</strong></p>
+        <a href="mailto:info@auranaperville.com">info@auranaperville.com</a>
+      </div>
+      <div class="contact-modal-details">
+        <p><strong>Phone</strong></p>
+        <a href="tel:+16305550808">(630) 555-0808</a>
+      </div>
+      <div class="contact-modal-details">
+        <p><strong>Private Events</strong></p>
+        <a href="mailto:events@auranaperville.com">events@auranaperville.com</a>
+      </div>
+      <p class="contact-modal-note">We usually respond within 24 hours.</p>
     </div>
   </div>
 
   </main>
+
+  <a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">&#9650;</a>
 
   <!-- Footer -->
   <footer>
@@ -1427,6 +1724,11 @@
     contactModalClose.addEventListener('click', () => contactModal.classList.remove('active'));
     contactModal.addEventListener('click', (e) => {
       if (e.target === contactModal) contactModal.classList.remove('active');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && contactModal.classList.contains('active')) {
+        contactModal.classList.remove('active');
+      }
     });
 
     // Mobile navigation toggle
@@ -1469,10 +1771,14 @@
       }
     });
 
-    // Nav scroll effect — more opaque on scroll
+    // Nav scroll effect — more opaque on scroll + back to top visibility
     const nav = document.querySelector('nav');
+    const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 50);
+      if (backToTop) {
+        backToTop.classList.toggle('visible', window.scrollY > 600);
+      }
     }, { passive: true });
 
     // Active nav link highlighting on scroll
